@@ -29,16 +29,19 @@
         .search-container {
             text-align: center;
             margin-top: 50px;
+            display: flex;
+            justify-content: center;
         }
 
         .search-bar {
             padding: 10px;
             border: 2px solid #333;
             border-radius: 5px;
-            width: 300px;
-            text-align: center;
+            width: 90%;
+            align-items: center;
             background-color: #fff;
-            display: inline-block;
+            display: flex;
+            flex-direction: column;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
@@ -63,6 +66,12 @@
         .search-bar input[type="submit"]:hover {
             background-color: #555;
         }
+        .chat{
+            height: 70vh;
+            width: 70vw;
+            background-color: #555;
+            border: 1px solid black;
+        }
     </style>
 </head>
 <body>
@@ -71,6 +80,7 @@
     </div>
     <div class="search-container">
         <div class="search-bar">
+            <div class="chat"></div>
             <form action="#" method="GET">
                 <input type="text" name="search" placeholder="Escribe tus sintomas...">
                 <input type="submit" value="Consultar">
