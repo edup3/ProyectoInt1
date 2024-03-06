@@ -1,83 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bAImax - Búsqueda</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
+{% extends 'base.html' %}
 
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #534f4f;
-            color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 36px;
-            letter-spacing: 2px;
-        }
-
-        .search-container {
-            text-align: center;
-            margin-top: 50px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .search-bar {
-            padding: 10px;
-            border: 2px solid #333;
-            border-radius: 5px;
-            width: 90%;
-            align-items: center;
-            background-color: #fff;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-bar input[type="text"] {
-            width: 70%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        .search-bar input[type="submit"] {
-            padding: 8px 20px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .search-bar input[type="submit"]:hover {
-            background-color: #555;
-        }
-        .chat{
-            height: 70vh;
-            width: 70vw;
-            background-color: #555;
-            border: 1px solid black;
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>bAImax</h1>
-    </div>
+{% block content %}
+<title>bAImax - Búsqueda</title>
     <div class="search-container">
         <div class="search-bar">
             <div class="chat"></div>
@@ -87,5 +11,5 @@
             </form>
         </div>
     </div>
-</body>
-</html>
+{% endblock content %}
+
