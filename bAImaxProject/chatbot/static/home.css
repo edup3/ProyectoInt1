@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor {
+    font-family: Arial, sans-serif;
+    background-color: #00072D;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.photo {
+    display: flex;
+}
+
+.robot {
+    width: 410px;
+    height: 370px;
+    justify-self: end;
+    margin-left: auto;
+}
+
+@media(max-width:768px) {
+    .robot {
+        display: none;
+    }
+}
+
