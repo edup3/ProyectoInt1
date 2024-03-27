@@ -1,19 +1,12 @@
+{% extends 'base2.html' %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
 <link rel="stylesheet" href="{% static 'chatbot.css' %}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-    
-</head>
-<body>
-    <div class="contenedor">
-        <div class="search-container">
-            <form action="#" method="GET">
-                <input type="text" name="search" placeholder="Escribe tus sintomas...">
-                <input type="submit" value="Send">
-        </div>
-    </div>
-</body>
-</html>
+<title>Chatbot</title>
+<div class="contenedor">
+    <form class="search-container">
+        <input class="search" type="text" name="search" placeholder="Message bAImax..."/>
+        <input class="submit" type="submit" value="Send"/>
+    </form>
+</div>
+{% endblock content %}

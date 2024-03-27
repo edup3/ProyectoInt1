@@ -10,16 +10,6 @@
 .logo{
     max-height: 60px;
 }
-.nav-link{
-    color:  #a6e1fa;
-    background-color: #001c55;
-    border-radius: 25px;
-    font-size: large;
-}
-.nav-link:hover{
-    color: #f0f0f0;
-    background-color: #0A2472;
-}
 .navbar-brand{
     color: #a6e1fa;
     transition: all ease .2s;

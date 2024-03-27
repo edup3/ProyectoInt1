@@ -9,3 +9,9 @@ def home(request):
 
 def chatbot(request):
     return render(request,'chatbot.html')
+
+def login(request):
+    return render(request,'login.html')
+
+def signup(request):
+    return render(request,'signup.html')

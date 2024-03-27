@@ -20,5 +20,7 @@ from chatbot import views as chatviews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',chatviews.home),
-    path('chatbot/',chatviews.chatbot)
+    path('chatbot/',chatviews.chatbot),
+    path('login/',chatviews.login),
+    path('signup/',chatviews.signup)
 ]
