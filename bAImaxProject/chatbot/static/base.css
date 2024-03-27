@@ -29,3 +29,7 @@
     color: #f0f0f0;
     scale: 1.2;
 }
+.navbar-toggler{
+    background-color: #0A2472;
+    border-color: #a6e1fa;
+}
