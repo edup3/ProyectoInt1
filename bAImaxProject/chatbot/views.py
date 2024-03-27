@@ -10,4 +10,7 @@ def home(request):
 
 def chatbot(request):
     respuesta = chatbotback.answer_message()
-    return render(request,'chatbot.html',context={'respuesta': respuesta})
+    context = {}
+    if request.method == 'POST':
+        context['mensaje'] = request.POST.get('message')
+    return render(request,'chatbot.html',context)

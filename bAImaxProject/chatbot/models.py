@@ -34,3 +34,14 @@ class Symptoms(models.Model):
 class Diagnosis(models.Model):
   diagnosis = models.TextField()
   recomendations = models.TextField()
+
+class Chat(models.Model):
+  id_chat = models.IntegerField(primary_key = True)
+
+class Message(models.Model):
+  def __str__(self) -> str:
+    return f'Author: {self.id_user} : {self.content} '
+  id_user = models.ForeignKey(User , on_delete=models.DO_NOTHING)
+  id_chat = models.OneToOneField(Chat, on_delete = models.DO_NOTHING)
+  content = models.TextField()
+  time = models.DateTimeField(auto_now_add = True) 

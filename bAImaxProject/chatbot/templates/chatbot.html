@@ -3,20 +3,25 @@
 {% block content %}
 <!DOCTYPE html>
 <link rel="stylesheet" href="{% static 'chatbot.css' %}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'chatbot.js' %}"></script>    
 </head>
 <body>
     <div class="contenedor">
-        <div class="search-container">
-            <form action="#" method="GET">
-                <input type="text" name="search" placeholder="Escribe tus sintomas...">
-                <input type="submit" value="Send">
+        <div class="chat-container">
+            <form method="POST" action="{% url 'chatbot' %}">
+                {% csrf_token %}
+                <input type="text" name="message" placeholder="Escribe tus sintomas...">
+                <input type="submit" id = 'Send' value="Send">
+                </form>
         </div>
     </div>
+    <div>{{ mensaje }}</div>
 </body>
 </html>
 {% endblock content %}
