@@ -1,7 +1,6 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #00072D;
 }
 
 .contenedor {
@@ -9,27 +8,13 @@ body {
     background-color: #00072D;
     width: 100%;
     height: 100%;
-
+    justify-content: center;
     display: flex;
-    flex-direction: column;
+    align-items: end;
     justify-content: center;
 }
 
-.header {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #534f4f;
-    color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 36px;
-    letter-spacing: 2px;
-}
-
-.chat-container {
+.search-container {
     text-align: center;
     margin-top: 50px;
 }
@@ -40,22 +25,27 @@ body {
     width: 70%;
     padding: 8px;
     background-color: #001C55;
-    color: #0E6BA8;
-    border-radius: 5px;
-    outline: none;
+    width: 100%;
 }
 
-.search-container input[type="submit"] {
-    padding: 8px 20px;
+.search::placeholder { 
+    color: #0E6BA8;
+    font-weight: bold;
+}
+
+.submit {
+    width: 7%;
+    padding: .8em;
     background-color: #0A2472;
     color: #0E6BA8;
     font-weight: bold;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.search-bar input[type="submit"]:hover {
-    background-color: #555;
+.submit:hover {
+    background-color: #001B6A;
 }
+
+

@@ -1,0 +1,16 @@
+{% extends 'base2.html' %}
+{% block content %}
+{% load static %}
+<title>Log In</title>
+<link rel="stylesheet" href="{% static 'loginsignup.css' %}">
+<div class="nonavbar">
+    <form class="contenedor">
+        <h2 class="texto">Log In</h2>
+        <input type="email" name="email" placeholder="Email" class="info"/>
+        <input type="password" name="password" placeholder="Password" class="info"/>
+        <button type="submit" class="btn">Login</button> 
+        <p class="cuenta">Don't have an account? <a class="signuplogin" href="/signup">Signup</a></p>
+    </form>
+</div>
+{% endblock content %}
+

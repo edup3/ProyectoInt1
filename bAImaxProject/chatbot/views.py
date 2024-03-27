@@ -14,3 +14,10 @@ def chatbot(request):
     if request.method == 'POST':
         context['mensaje'] = request.POST.get('message')
     return render(request,'chatbot.html',context)
+
+def login(request):
+    return render(request,'login.html')
+
+def signup(request):
+    return render(request,'signup.html')
+    
