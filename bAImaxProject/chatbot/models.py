@@ -28,7 +28,7 @@ class MedicalAppointment(models.Model):
   id_user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
   confirmation = models.CharField(max_length=255)
 
-class Symptoms(models.Model):
+class Symptom(models.Model):
   description = models.TextField()
 
 class Diagnosis(models.Model):
@@ -40,8 +40,8 @@ class Chat(models.Model):
 
 class Message(models.Model):
   def __str__(self) -> str:
-    return f'Author: {self.id_user} : {self.content} '
-  id_user = models.ForeignKey(User , on_delete=models.DO_NOTHING)
+    return f'Author: {self.id_user.name} : {self.content} '
+  id_user = models.ForeignKey(User , on_delete=models.DO_NOTHING,blank = True, null = True)
   id_chat = models.OneToOneField(Chat, on_delete = models.DO_NOTHING)
   content = models.TextField()
   time = models.DateTimeField(auto_now_add = True) 

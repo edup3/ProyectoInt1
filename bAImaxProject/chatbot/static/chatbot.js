@@ -6,12 +6,12 @@ $(document).on('submit','#post-form',function(e){
       url:'/send',
       data:{
           username:$('#username').val(),
-          room_id:$('#room_id').val(),
+          chat_id:$('#chat_id').val(),
           message:$('#message').val(),
         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
       },
       success: function(data){
-         //alert(data)
+         alert(data)
       }
     });
     document.getElementById('message').value = ''

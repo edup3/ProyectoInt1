@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="{% static 'home.css' %}">
 <title>Home</title>
     <div class="contenedor">
+        <form action="{% url 'checkview' %}" method="POST" id="post-form">
+            {% csrf_token %}
+            <input type="text" placeholder="Ingrese nombre de usuario" name="username">
+            <input type="text" placeholder="Ingrese el id de su conversacion" name="chat_id">
+            <input type="submit" value="Send!">
+        </form>
         <div class="photo">
             <img src="{% static 'robot.png' %}" class="robot" alt="">
         </div>
