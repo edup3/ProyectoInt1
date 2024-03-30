@@ -40,8 +40,10 @@ class Chat(models.Model):
 
 class Message(models.Model):
   def __str__(self) -> str:
+    if self.id_user == None:
+      return f'Author: bAImax : {self.content} '
     return f'Author: {self.id_user.name} : {self.content} '
   id_user = models.ForeignKey(User , on_delete=models.DO_NOTHING,blank = True, null = True)
-  id_chat = models.OneToOneField(Chat, on_delete = models.DO_NOTHING)
+  id_chat = models.ForeignKey(Chat, on_delete = models.DO_NOTHING)
   content = models.TextField()
   time = models.DateTimeField(auto_now_add = True) 
