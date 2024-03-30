@@ -10,6 +10,7 @@ class User(models.Model):
 
 class MedicalCenter(models.Model):
   name = models.CharField(max_length=255)
+  specialty = models.CharField(max_length=255, null=True)
   adress = models.CharField(max_length=255)
   phone = models.IntegerField()
   schedule = models.CharField(max_length=255)
