@@ -30,9 +30,22 @@ class MedicalAppointment(models.Model):
   id_user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
   confirmation = models.CharField(max_length=255)
 
-class Symptoms(models.Model):
+class Symptom(models.Model):
   description = models.TextField()
 
 class Diagnosis(models.Model):
   diagnosis = models.TextField()
   recomendations = models.TextField()
+
+class Chat(models.Model):
+  id_chat = models.IntegerField(primary_key = True)
+
+class Message(models.Model):
+  def __str__(self) -> str:
+    if self.id_user == None:
+      return f'Author: bAImax : {self.content} '
+    return f'Author: {self.id_user.name} : {self.content} '
+  id_user = models.ForeignKey(User , on_delete=models.DO_NOTHING,blank = True, null = True)
+  id_chat = models.ForeignKey(Chat, on_delete = models.DO_NOTHING)
+  content = models.TextField()
+  time = models.DateTimeField(auto_now_add = True) 
