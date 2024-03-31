@@ -14,7 +14,7 @@ def home(request):
     respuesta = chatbotback.answer_message()
     return render(request,'home.html')
 
-def login(request):
+def login_(request):
     form = LoginForm()
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
@@ -41,7 +41,7 @@ def signup(request):
 
     return render(request,'signup.html', context=context)
 
-def logout(request):
+def logout_(request):
     auth.logout(request)
     return redirect("")
 
