@@ -82,4 +82,4 @@ def send(request):
 def getMessages(request, chatid):
     room_details = Chat.objects.get(id_chat=chatid)
     messages = Message.objects.filter(id_chat=room_details)
-    return JsonResponse({"messages":list(messages.values('id_user__name','content','time'))})
+    return JsonResponse({"messages":list(messages.values('id_user__name','content','time').order_by('time'))[::-1]})

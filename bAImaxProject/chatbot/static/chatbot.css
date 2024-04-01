@@ -24,8 +24,9 @@ body {
 }
 #display{
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     overflow-y: scroll;
+    height: 100%;
     
 }
 #display::-webkit-scrollbar{
@@ -50,7 +51,6 @@ body {
     color: #0E6BA8;
     font-weight: bold;
 }
-
 #Send {
     width: 7%;
     padding: .8em;
