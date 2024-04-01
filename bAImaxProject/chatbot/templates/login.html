@@ -2,18 +2,14 @@
 {% block content %}
 {% load static %}
 <title>Log In</title>
-<form method="POST" autocomplete="off">
-    {% csrf_token %}
-    {{loginform.as_p}}
-    <input type="submit" value="Login" />
-</form>
+
 <link rel="stylesheet" href="{% static 'loginsignup.css' %}">
 <div class="nonavbar">
-    <form class="contenedor">
+    <form method="POST"  autocomplete="oFF"  class="contenedor">
         <h2 class="texto">Log In</h2>
-        <input type="email" name="email" placeholder="Email" class="info"/>
-        <input type="password" name="password" placeholder="Password" class="info"/>
-        <button type="submit" class="btn">Login</button> 
+        {% csrf_token %}
+        {{loginform.as_p}}
+        <input type="submit" value="Login" />
         <p class="cuenta">Don't have an account? <a class="signuplogin" href="/signup">Signup</a></p>
     </form>
 </div>

@@ -9,5 +9,5 @@ urlpatterns = [
     path('signup/',views.signup, name="signup"),
     path('send', views.send, name='send'),
     path('getMessages/<int:chatid>/', views.getMessages, name='getMessages'),
-    path('logout', views.logout_, name="logout")
+    path('logout/', views.logout_, name="logout")
 ]
