@@ -11,7 +11,6 @@ $(document).on('submit','#post-form',function(e){
         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
       },
       success: function(data){
-         alert(data)
       }
     });
     document.getElementById('message').value = ''

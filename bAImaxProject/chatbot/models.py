@@ -1,9 +1,12 @@
 from django.db import models
 from django.contrib.auth.forms import User
+from datetime import datetime
 
 # Create your models here.
 
 class User(models.Model):
+  def __str__(self) -> str:
+    return f'{self.name} {self.lastname}'
   name = models.CharField(max_length=255)
   lastname = models.CharField(max_length=255)
   adress = models.CharField(max_length=255)
@@ -48,4 +51,4 @@ class Message(models.Model):
   id_user = models.ForeignKey(User , on_delete=models.DO_NOTHING,blank = True, null = True)
   id_chat = models.ForeignKey(Chat, on_delete = models.DO_NOTHING)
   content = models.TextField()
-  time = models.DateTimeField(auto_now_add = True) 
+  time = models.DateTimeField(default = datetime.now) 
