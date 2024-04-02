@@ -34,3 +34,13 @@ class Symptoms(models.Model):
 class Diagnosis(models.Model):
   diagnosis = models.TextField()
   recomendations = models.TextField()
+
+
+class Feedback(models.Model):
+    nombre = models.CharField(max_length=100)
+    email = models.EmailField()
+    mensaje = models.TextField()
+    creado_en = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback de {self.nombre}"
