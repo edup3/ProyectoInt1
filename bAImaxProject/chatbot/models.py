@@ -33,8 +33,6 @@ class MedicalAppointment(models.Model):
   id_user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
   confirmation = models.CharField(max_length=255)
 
-class Symptom(models.Model):
-  description = models.TextField()
 
 class Diagnosis(models.Model):
   diagnosis = models.TextField()
