@@ -7,7 +7,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #00072D;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -22,6 +22,7 @@ body {
     flex-direction: column;
     
 }
+
 #display{
     display: flex;
     flex-direction: column-reverse;
@@ -29,9 +30,11 @@ body {
     height: 100%;
     
 }
+
 #display::-webkit-scrollbar{
     display: none;
 }
+
 .chat-bar{
     width: 70%;
     padding: 8px;
@@ -40,6 +43,7 @@ body {
     display: flex;
     border-radius: 15px;
 }
+
 #message{
     width: 100%;
     background-color: transparent;
@@ -47,10 +51,12 @@ body {
     outline: none;
     caret-color: #A6E1FA;
 }
+
 #message::placeholder { 
     color: #0E6BA8;
     font-weight: bold;
 }
+
 #Send {
     width: 7%;
     padding: .8em;
@@ -66,6 +72,7 @@ body {
 .submit:hover {
     background-color: #001B6A;
 }
+
 .message{
     margin: 1.5em; 
     width: 50%;   
@@ -75,17 +82,18 @@ body {
     border-radius: 10px;
     
 }
+
 .message p{
     margin-left: 1em;
     word-wrap: break-word;
     text-align: start;
 }
+
 .messageUser{
     align-self:flex-start;
     background-color: #A6E1FA;
-
-    
 }
+
 .messageUser b{
     align-self: flex-start;
     padding-left: 1em;

@@ -4,7 +4,6 @@ from django.http import HttpResponse,JsonResponse
 from . import chatbotback
 from chatbot.models import Chat,Message,User
 from . forms import CreateUserForm, LoginForm
-from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -22,10 +21,11 @@ def login_(request):
         if form.is_valid():
             username = request.POST.get('username')
             password = request.POST.get('password')
+            idConversation = 1
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                auth.login(request, user)
-                return redirect("chatbot")
+                login(request, user)
+                return redirect(f"/chatbot/{idConversation}")
 
     context = {'loginform':form}    
     return render(request,'login.html', context=context)
@@ -36,18 +36,18 @@ def signup(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("login")
+            return redirect("/login")
         
     context = {'registerform' : form}
 
     return render(request,'signup.html', context=context)
 
 def logout_(request):
-    auth.logout(request)
-    return redirect("")
+    logout(request)
+    return redirect("/")
 
 
-@login_required(login_url="login")
+@login_required(login_url='/login')
 def chatbot(request, room):
     username = request.GET.get('username')
     room_details = Chat.objects.get(id_chat=room)

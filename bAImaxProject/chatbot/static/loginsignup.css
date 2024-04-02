@@ -1,14 +1,14 @@
 body {
     margin: 0;
+    padding: 0;
 }
 
 .nonavbar {
     background-color: #00072D;
-    height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .contenedor {
@@ -17,6 +17,8 @@ body {
     margin: 5%;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1em;
     align-items: center;
     background-color: #001C55;
 }
@@ -29,25 +31,29 @@ body {
     font-weight: bold;
 }
 
-input:-webkit-autofill {
-    background-color: #0A2472 !important;
+.contenedor p {
+    color: #0E6BA8;
+    font-weight: bold;
+    font-size: large;
+    width: 60%;
 }
 
-.contenedor input[type="text"],
-.contenedor input[type="email"],
-.contenedor input[type="password"]{
-    width: 50%;
+#id_first_name,#id_last_name,#id_email,#id_password1,#id_password2,#id_username,#id_password
+{
+    width: 100%;
     padding: 1.25em;
-    margin: 25px;
-    border-radius: 25px;
+    margin: 2% 0px;
+    border-radius: 15px;
     background-color: #0A2472;
     border: none;
     font-weight: bold;
     font-size:medium;
     color: #0E6BA8;
+    flex: 1 0 8rem;
 }
-
-.contenedor input[type="text"]
+.contenedor li{
+    color: #A6E1FA ;
+}
 
 .contenedor input[type="text"]::placeholder{
     color: #0E6BA8;
@@ -65,6 +71,7 @@ input:-webkit-autofill {
     border: none;
     font-weight: bold;
     font-size: medium;
+    flex-direction: 1 0 4rem;
 }
 
 .contenedor input[type="submit"]:hover {
@@ -72,10 +79,11 @@ input:-webkit-autofill {
 }
 
 .cuenta {
-    margin-bottom: 50px;
-    margin-top: 25px;
+    justify-self: center;
     font-family: Arial, Helvetica, sans-serif;
     color: #0E6BA8;
+    font-size: medium;
+    margin-bottom: 2em;
 }
 
 .signuplogin {

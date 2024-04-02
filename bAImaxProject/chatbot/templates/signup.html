@@ -9,18 +9,8 @@
         {% csrf_token %}
         {{registerform.as_p}}
         <input type="submit" value="Signup" />
-        <p class="cuenta">Already have an account? <a class="signuplogin" href="/login">Login</a></p>
+        <div class="cuenta">Already have an account? <a class="signuplogin" href="/login">Login</a></div>
     </form>
-
-
-    <!-- <form class="contenedor">
-        <h2 class="texto">Sign Up</h2>
-        <input type="email" name="email" placeholder="Email" class="info"/>
-        <input type="password" name="password" placeholder="Password" class="info"/>
-        <input type="password" name="confirm password" placeholder="Confirm Password" class="info"/>
-        <button type="submit" class="btn">Signup</button> 
-        <p class="cuenta">Already have an account? <a class="signuplogin" href="/login">Login</a></p>
-    </form> -->
 </div>
 
 {% endblock content %}
