@@ -1,13 +1,14 @@
 body {
     margin: 0;
     padding: 0;
+    overflow-y: hidden;
 }
 
 .contenedor {
     font-family: Arial, sans-serif;
     background-color: #00072D;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -20,7 +21,7 @@ body {
     width: 90%;
     display: flex;
     flex-direction: column;
-    
+
 }
 
 #display{

@@ -18,15 +18,14 @@ setInterval(function(){
         url : "/getMessages/{{room}}/",
         success: function(response){
             $("#display").empty();
-            console.log(response.messages);
             for (var key in response.messages)
             {
-                if(response.messages[key].id_user__name == null){
+                if(response.messages[key].user__username == null){
                     var temp="<div class='messageBot message'><b>"+'bAImax'+"</b><p>"+response.messages[key].content+"</p><span class='time'>"+response.messages[key].time+"</span></div>";
                     $("#display").append(temp);
                 }
                 else{
-                    var temp="<div class='messageUser message'><b>"+response.messages[key].id_user__name+"</b><p>"+response.messages[key].content+"</p><span class='time'>"+response.messages[key].time+"</span></div>";
+                    var temp="<div class='messageUser message'><b>"+response.messages[key].user__username+"</b><p>"+response.messages[key].content+"</p><span class='time'>"+response.messages[key].time+"</span></div>";
                     $("#display").append(temp);
                 }
             }

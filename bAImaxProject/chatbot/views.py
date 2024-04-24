@@ -68,14 +68,13 @@ def checkview(request:HttpRequest):
         new_room.save()
         return redirect('chatbot/'+room+'/?username='+request.user.get_username())
 
-def send(request):
+def send(request:HttpRequest):
     message = request.POST['message']
-    username = request.POST['username']
     room_id = request.POST['chat_id']
-    user = User.objects.get(username=username)
-    chati = Chat.objects.get(id_chat = room_id)
+    user = User.objects.get(id=request.user.id)
+    chatid = Chat.objects.get(id_chat = room_id)
 
-    new_message = Message.objects.create(content=message, user = user, chat=chati)
+    new_message = Message.objects.create(content=message, user = user, chat=chatid)
     new_message.save()
     return HttpResponse('Message sent successfully')
 
