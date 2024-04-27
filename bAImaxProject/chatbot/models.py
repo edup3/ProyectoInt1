@@ -34,7 +34,7 @@ class Diagnosis(models.Model):
 
 class Chat(models.Model):
   id_chat = models.IntegerField(primary_key = True)
-
+  user = models.ForeignKey(User,on_delete=models.CASCADE)
 class Message(models.Model):
   def __str__(self) -> str:
     if self.user == None:
