@@ -29,11 +29,11 @@ class Specialist(models.Model):
   phone = models.IntegerField()
   location = models.CharField(max_length=255)
   schedule = models.CharField(max_length=255)
-  id_medicalCenter = models.ForeignKey(MedicalCenter, on_delete=models.DO_NOTHING)
+  id_medicalCenter = models.ForeignKey(MedicalCenter, on_delete=models.CASCADE)
 
 class MedicalAppointment(models.Model):
-  specialist = models.ForeignKey(Specialist, on_delete=models.DO_NOTHING)
-  user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+  specialist = models.ForeignKey(Specialist, on_delete=models.CASCADE)
+  user = models.ForeignKey(User, on_delete=models.CASCADE)
   confirmation = models.CharField(max_length=255)
 
 
@@ -43,13 +43,13 @@ class Diagnosis(models.Model):
 
 class Chat(models.Model):
   id_chat = models.IntegerField(primary_key = True)
-  user = models.ForeignKey(User,on_delete=models.CASCADE)
+  user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
 class Message(models.Model):
   def __str__(self) -> str:
     if self.user == None:
       return f'Author: bAImax : {self.content} '
     return f'Author: {self.user.first_name} {self.user.last_name} : {self.content} '
-  user = models.ForeignKey(User , on_delete=models.DO_NOTHING,blank = True, null = True)
-  chat = models.ForeignKey(Chat, on_delete = models.DO_NOTHING)
+  user = models.ForeignKey(User , on_delete=models.CASCADE,blank = True, null = True)
+  chat = models.ForeignKey(Chat, on_delete = models.CASCADE)
   content = models.TextField()
   time = models.DateTimeField(default = datetime.now) 

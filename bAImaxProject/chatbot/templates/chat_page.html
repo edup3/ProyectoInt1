@@ -1,0 +1,10 @@
+{% extends 'base3.html' %}
+{% block content %}
+{% load static %}
+{% for chat in chats %}
+<a href="{% url 'chatbot' chat.id_chat %}" class="chat_link">{{ chat.id_chat }}</a>
+{% empty %}
+<h1>No hay chats</h1>
+{% endfor %}
+<a href="{% url 'checkview' %}" class="new_chat">Crear Nuevo Chat</a>
+{% endblock content %}

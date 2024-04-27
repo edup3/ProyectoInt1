@@ -11,21 +11,24 @@ User = get_user_model()
 # Create your views here.
 
 def home(request):
+    if request.user is not None:
+        return redirect('chat_page')
     respuesta = chatbotback.answer_message("hola")
     return render(request,'home.html')
 
 def login_(request):
+    if request.user is not None:
+        return redirect('chat_page')
     form = LoginForm()
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
             username = request.POST.get('username')
             password = request.POST.get('password')
-            idConversation = 1
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(f"/chatbot/{idConversation}")
+                return redirect('chat_page')
 
     context = {'loginform':form}    
     return render(request,'login.html', context=context)
@@ -58,15 +61,11 @@ def chatbot(request, room):
     })
 
 def checkview(request:HttpRequest):
-    room = request.POST['chat_id']
-    
-
-    if Chat.objects.filter(id_chat=room).exists():
-        return redirect('chatbot/'+room+'/?username='+request.user.get_username())
-    else:
-        new_room = Chat.objects.create(id_chat=room)
-        new_room.save()
-        return redirect('chatbot/'+room+'/?username='+request.user.get_username())
+    new_room = Chat.objects.create(user = request.user)
+    new_room.save()
+    print(new_room)
+    print(new_room.user.get_username())
+    return redirect('chat_page')
 
 def send(request:HttpRequest):
     message = request.POST['message']
@@ -87,3 +86,9 @@ def getMessages(request, chatid):
     room_details = Chat.objects.get(id_chat=chatid)
     messages = Message.objects.filter(chat=room_details)
     return JsonResponse({"messages":list(messages.values('user__username','content','time').order_by('time'))[::-1]})
+
+@login_required(login_url='/login')
+def chat_page(request:HttpRequest):
+    chats = Chat.objects.filter(user = request.user)
+    print(chats)
+    return render(request,'chat_page.html',{'chats':chats})
