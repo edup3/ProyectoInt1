@@ -11,7 +11,7 @@ User = get_user_model()
 # Create your views here.
 
 def home(request):
-    respuesta = chatbotback.answer_message()
+    respuesta = chatbotback.answer_message("hola")
     return render(request,'home.html')
 
 def login_(request):
@@ -76,6 +76,11 @@ def send(request:HttpRequest):
 
     new_message = Message.objects.create(content=message, user = user, chat=chatid)
     new_message.save()
+
+    new_message = Message.objects.create(content=chatbotback.answer_message(message), user = None, chat=chatid)
+    new_message.save()
+
+
     return HttpResponse('Message sent successfully')
 
 def getMessages(request, chatid):

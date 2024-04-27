@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from datetime import datetime
+import numpy as np
+
+
+def get_default_array():
+  default_arr = np.random.rand(1536)  # Adjust this to your desired default array
+  return default_arr.tobytes()
+
 
 # Create your models here.
 User = get_user_model()
@@ -12,6 +19,8 @@ class MedicalCenter(models.Model):
   adress = models.CharField(max_length=255)
   phone = models.IntegerField()
   schedule = models.CharField(max_length=255)
+  emb = models.BinaryField(default=00)
+  location=models.CharField(max_length=255,null=True)
 
 class Specialist(models.Model):
   name = models.CharField(max_length=255)
