@@ -31,7 +31,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         help = 'Modify path of images'
 
-        promp="Orthopedic Surgery and Sports Medicine"
+        promp="i have a headache"
 
         embpromp=get_embedding(promp)
         
