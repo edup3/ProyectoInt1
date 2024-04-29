@@ -10,14 +10,13 @@ User = get_user_model()
 
 # Create your views here.
 
-def home(request):
-    if request.user is not None:
+def home(request:HttpRequest):
+    if request.user.is_authenticated:
         return redirect('chat_page')
-    respuesta = chatbotback.answer_message("hola")
     return render(request,'home.html')
 
-def login_(request):
-    if request.user is not None:
+def login_(request:HttpRequest):
+    if request.user.is_authenticated :
         return redirect('chat_page')
     form = LoginForm()
     if request.method == "POST":
@@ -34,6 +33,8 @@ def login_(request):
     return render(request,'login.html', context=context)
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('chat_page')
     form = CreateUserForm()
     if request.method == "POST":
         form = CreateUserForm(request.POST)
@@ -57,14 +58,11 @@ def chatbot(request, room):
     return render(request, 'chatbot.html', {
         'username': username,
         'room': room,
-        'chat': room_details
-    })
+        'chat': room_details })
 
 def checkview(request:HttpRequest):
     new_room = Chat.objects.create(user = request.user)
     new_room.save()
-    print(new_room)
-    print(new_room.user.get_username())
     return redirect('chat_page')
 
 def send(request:HttpRequest):
@@ -90,5 +88,4 @@ def getMessages(request, chatid):
 @login_required(login_url='/login')
 def chat_page(request:HttpRequest):
     chats = Chat.objects.filter(user = request.user)
-    print(chats)
     return render(request,'chat_page.html',{'chats':chats})

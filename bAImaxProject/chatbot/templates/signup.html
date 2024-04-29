@@ -2,8 +2,9 @@
 {% block content %}
 {% load static %}
 <title>Signup</title>
+
 <link rel="stylesheet" href="{% static 'loginsignup.css' %}">
-<div class="nonavbar">
+<div class="nonavbarsign">
     <form method="POST" autocomplete="off" class="contenedor">
         <h2 class="texto">Sign Up</h2>
         {% csrf_token %}
