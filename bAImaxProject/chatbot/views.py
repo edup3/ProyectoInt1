@@ -62,7 +62,6 @@ def chatbot(request, room):
 
 def checkview(request:HttpRequest):
     new_room = Chat.objects.create(user = request.user)
-    new_room.save()
     return redirect('chat_page')
 
 def send(request:HttpRequest):

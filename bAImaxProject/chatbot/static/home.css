@@ -5,20 +5,30 @@ body {
     padding: 0;
 }
 
-.contenedor {
-    font-family: Arial, sans-serif;
+.nonavbar {
     background-color: #00072D;
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.nonavbar::-webkit-scrollbar{
+    display: none;
+}
+
+.contenedor {
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-
 }
 
 .texto {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
     margin-left: 10%;
 }
@@ -40,3 +50,33 @@ body {
     height: 80%;
 }
 
+.requirements{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 10%;
+}
+
+.req{
+    color: #0E6BA8;
+    font-size: large;
+    font-weight: bold;
+    font-family: Madimi One;
+}
+
+.exp{
+    color: #0E6BA8;
+    font-weight: bold;
+    font-family: Madimi One;
+}
+
+.info{
+    display: flex;
+    align-items: center;
+}
+
+.icons{
+    object-fit: contain;
+    margin-right: 20px;
+    height: 100%;
+}
