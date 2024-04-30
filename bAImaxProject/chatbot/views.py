@@ -11,9 +11,10 @@ User = get_user_model()
 # Create your views here.
 
 def home(request:HttpRequest):
+    navbar = 'base.html'
     if request.user.is_authenticated:
-        return redirect('chat_page')
-    return render(request,'home.html')
+        navbar = 'base3.html'
+    return render(request,'home.html',{'navbar':navbar})
 
 def login_(request:HttpRequest):
     if request.user.is_authenticated :
