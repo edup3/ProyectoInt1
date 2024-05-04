@@ -5,7 +5,8 @@ import os
 
 
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv('openAI.env')
+# _ = load_dotenv('openAI.env')
+
 client = OpenAI(
     api_key="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",
 )
