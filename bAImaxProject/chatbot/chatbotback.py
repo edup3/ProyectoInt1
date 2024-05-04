@@ -7,8 +7,9 @@ import os
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv('openAI.env')
 client = OpenAI(
+    api_key='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'
 
-    api_key=os.environ.get('openAI_api_key'),
+    #api_key=os.environ.get('openAI_api_key'),
 )
 
 #Funcion de respuesta
