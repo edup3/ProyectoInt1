@@ -51,6 +51,7 @@ body {
     border: transparent;
     outline: none;
     caret-color: #A6E1FA;
+    color: #0E6BA8 ;
 }
 
 #message::placeholder { 
