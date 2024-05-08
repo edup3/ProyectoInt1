@@ -10,5 +10,6 @@ urlpatterns = [
     path('send', views.send, name='send'),
     path('getMessages/<int:chatid>/', views.getMessages, name='getMessages'),
     path('logout/', views.logout_, name="logout"),
-    path('chats/',views.chat_page,name='chat_page')
+    path('chats/',views.chat_page,name='chat_page'),
+    path('emergency', views.emergency, name = 'emergency')
 ]

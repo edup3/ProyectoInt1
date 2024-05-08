@@ -6,6 +6,10 @@ from chatbot.models import Chat,Message
 from . forms import CreateUserForm, LoginForm
 from django.contrib.auth import authenticate, login, logout,get_user_model
 from django.contrib.auth.decorators import login_required
+from twilio.rest import Client
+import os
+from dotenv import load_dotenv
+
 User = get_user_model()
 
 # Create your views here.
@@ -89,3 +93,35 @@ def getMessages(request, chatid):
 def chat_page(request:HttpRequest):
     chats = Chat.objects.filter(user = request.user)
     return render(request,'chat_page.html',{'chats':chats})
+
+def emergency(request):
+    _ = load_dotenv('twilio.env')
+    account_sid = os.environ.get('accSid')
+    auth_token = os.environ.get('authToken'),
+
+    client = Client(account_sid, auth_token)
+
+    call = client.calls.create(
+    url="http://demo.twilio.com/docs/voice.xml",
+    # to="+573188763655",
+    to="+573053036284",
+    from_="+12073673832"
+    )
+
+    return HttpResponse("Calling emergency services")
+
+
+def appointment(request):
+    _ = load_dotenv('twilio2.env')
+    account_sid = os.environ.get('accSid')
+    auth_token = os.environ.get('authToken'),
+
+    client = Client(account_sid, auth_token)
+    message = client.messages.create(
+    from_='+12075604809',
+    body='Hello',
+    to='+573053036284'
+    )
+    return HttpResponse("Appointment scheduled successfully")
+
+
