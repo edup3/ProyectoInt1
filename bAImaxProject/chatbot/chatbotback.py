@@ -6,8 +6,8 @@ import os
 
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv('openAI.env')
-client = OpenAI(
 
+client = OpenAI(
     api_key=os.environ.get('openAI_api_key'),
 )
 

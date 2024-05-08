@@ -18,7 +18,7 @@ body {
 
 .chat-container {
     text-align: center;
-    height: 80%;
+    height: 90%;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -29,7 +29,6 @@ body {
     flex-direction: column-reverse;
     overflow-y: scroll;
     height: 100%;
-    
 }
 
 #display::-webkit-scrollbar{
@@ -37,12 +36,19 @@ body {
 }
 
 .chat-bar{
-    width: 70%;
     padding: 8px;
+    width: 93%;
     background-color: #001C55;
-    width: 100%;
     display: flex;
     border-radius: 15px;
+}
+
+.inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 #message{
@@ -69,6 +75,26 @@ body {
     border-radius: 25px;
     cursor: pointer;
     margin-left: auto;
+}
+
+#SOS {
+    height: 100%;
+    border-radius: 45%;
+    padding: 1em;
+    background-color: transparent;
+    color: white;
+    border: none;
+    margin-left: auto;
+    font-weight: bold;
+    background-color: red;
+    opacity: 0.4;
+    text-decoration: none;
+
+}
+
+#SOS:hover{
+    background-color: red;
+    opacity: 1;
 }
 
 .submit:hover {
