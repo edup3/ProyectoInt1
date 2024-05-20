@@ -92,7 +92,16 @@ def getMessages(request, chatid):
 @login_required(login_url='/login')
 def chat_page(request:HttpRequest):
     chats = Chat.objects.filter(user = request.user)
-    return render(request,'chat_page.html',{'chats':chats})
+    chatsfirstmessage = []
+    for chat in chats:
+        firstmessage = Message.objects.filter(chat=chat).order_by('time')
+        if firstmessage:
+            chatsfirstmessage.append({'chat':chat,'message':firstmessage[0]})
+        else:
+            chatsfirstmessage.append({'chat':chat,'message':{'content':'Nuevo Chat'}})
+    for chat in chatsfirstmessage:
+        print(chat)
+    return render(request,'chat_page.html',{'chats':chatsfirstmessage})
 
 def emergency(request):
     _ = load_dotenv('twilio.env')

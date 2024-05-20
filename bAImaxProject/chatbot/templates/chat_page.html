@@ -9,7 +9,7 @@
             <ul class="lista">
                 {% for chat in chats %}
                 <li class="item">
-                    <a href="{% url 'chatbot' chat.id_chat %}" class="chat_link">{{ chat.id_chat }}</a>
+                    <a href="{% url 'chatbot' chat.chat.id_chat %}" class="chat_link">{{ chat.chat.id_chat }}: {{ chat.message.content }}</a>
                 </li>
                 {% endfor %}
             </ul>
