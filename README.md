@@ -17,11 +17,11 @@ twilio
 
 ### Command to install libraries:
 
-pip install -r "requirements.txt"
+` pip install -r "requirements.txt" `
 
 ## Command to run the program:
 
-py manage.py runserver
+` py manage.py runserver `
 
 For the chatbot to work you will need an Open AI api key
 
