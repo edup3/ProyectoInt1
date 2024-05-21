@@ -5,27 +5,35 @@ import os
 
 
 from dotenv import load_dotenv, find_dotenv
-# _ = load_dotenv('openAI.env')
+_ = load_dotenv('openAI.env')
 
 client = OpenAI(
-    api_key="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",
+    api_key="openAI.env",
 )
 
 #Funcion de respuesta
-def response(texto):
+def response(texto,contexto,tools):
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
-    messages=[
-    {"role": "system", "content": "You are bAimax, a health assistant who is there to kindly answer questions regarding health, receive symptoms and respond with diagnoses if possible."},
-    {"role": "user", "content": texto}
-  ])
+    messages=contexto,
+    tools=tools,
+    tool_choice="auto", )
     #Devuelve el contenido de la respuesta
-    return completion.choices[0].message.content  
-         
+    x= completion.choices[0].message.content
+
+
+    
+
+
+
+    if x==None:
+        return "Esta vacio tu mensaje"  
+    else:
+        return x
 
 
 
 
-def answer_message(texto):
+def answer_message(texto,contexto,tools):
 
-    return response(texto)
+    return response(texto,contexto,tools)

@@ -2,11 +2,16 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.http import HttpResponse,JsonResponse,HttpRequest
 from . import chatbotback
-from chatbot.models import Chat,Message
+from chatbot.models import Chat,Message,MedicalCenter
 from . forms import CreateUserForm, LoginForm
 from django.contrib.auth import authenticate, login, logout,get_user_model
 from django.contrib.auth.decorators import login_required
+import numpy as np
+import json
+from openai import OpenAI
+from dotenv import load_dotenv, find_dotenv
 User = get_user_model()
+import os
 
 # Create your views here.
 
@@ -65,6 +70,79 @@ def checkview(request:HttpRequest):
     new_room = Chat.objects.create(user = request.user)
     return redirect('chat_page')
 
+
+
+## Seccion de Tools
+tools=[ 
+            
+            {
+            "type": "function",
+            "function": {
+                "name": "getMedicalCenter",
+                "description": "obtains the appropriate medical center for the medical diagnosis,It is used to suggest medical centers to the user or if the user asks for one",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "promp": { "type": "string", "description": "The diagnosis and symtops, e.g. Bone fracture and back pain", }
+                    },
+                    "required": ["promp"],
+                },
+            },
+        } 
+        
+        ]
+
+###
+
+_ = load_dotenv('openAI.env')
+client = OpenAI(
+
+    api_key=os.environ.get('openAI_api_key'),
+)
+
+
+def get_embedding(text, model="text-embedding-3-small"):
+   print(text)
+   print(text)
+   print(text)
+   text = text.replace("\n", " ")
+   return client.embeddings.create(input = [text], model=model).data[0].embedding
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+
+
+
+
+
+
+###
+def getMedicalCenter(promp):
+    embpromp=get_embedding(promp)
+        
+    centros_medicos=MedicalCenter.objects.all()
+    lista=[]
+    for centro in centros_medicos:
+        item=centro.emb
+        item=list(np.frombuffer(item))
+        lista.append(cosine_similarity(item,embpromp))
+
+    lista = np.array(lista)
+    idx = np.argmax(lista)
+    idx = int(idx)
+
+    return json.dumps({"center":centros_medicos[idx].name})
+
+
+def getMedicalCenterlol(promp):
+    return json.dumps({"center": "Centro de Especialidad baltimore" + promp })
+###
+
+
+
+
+
 def send(request:HttpRequest):
     message = request.POST['message']
     room_id = request.POST['chat_id']
@@ -74,16 +152,106 @@ def send(request:HttpRequest):
     new_message = Message.objects.create(content=message, user = user, chat=chatid)
     new_message.save()
 
-    new_message = Message.objects.create(content=chatbotback.answer_message(message), user = None, chat=chatid)
+
+
+# Seccion muy pero muy especial para la recoleccion del historial
+#/////////////
+    msglimit=20 # Limite de mensajes que recoge el modelo de lenguaje dentro del chat.
+
+    messages = Message.objects.filter(chat=room_id) #Filtro de mensajes por room id
+    x=list(messages)        #Lista de todos los mensajes de la respectiva room id
+    x=x[-msglimit:]         #Lista ajustada al limite de mensajes
+  
+    historial=[
+    {"role": "system", "content": "You are bAimax, a health assistant who is there to kindly answer questions regarding health, receive symptoms and respond with diagnoses if possible. Don't give too long aswers, try to keep it direct and short"},
+    ]
+    for i in x:
+        if i.user==None:
+            autor="assistant"
+        else:
+            autor="user"
+        historial.append({ "role": autor, "content": i.content })
+#///////////
+#Finaliza seccion
+
+
+#Creacion del mensaje de respuesta
+
+    #response_message=chatbotback.answer_message(message,historial,tools)
+
+    client = OpenAI(
+    api_key=os.environ.get('openAI_api_key'),
+    )
+
+
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=historial,
+        tools=tools,
+        tool_choice="auto", )
+    #Devuelve el contenido de la respuesta
+    z= completion.choices[0].message
+
+    response_message=z
+    tool_calls = response_message.tool_calls
+
+    if tool_calls:
+        # Step 3: call the function
+        # Note: the JSON response may not always be valid; be sure to handle errors
+        available_functions = {
+            "getMedicalCenter": getMedicalCenter,
+        }  # only one function in this example, but you can have multiple
+        historial.append(response_message)  # extend conversation with assistant's reply
+        # Step 4: send the info for each function call and function response to the model
+        for tool_call in tool_calls:
+            function_name = tool_call.function.name
+            function_to_call = available_functions[function_name]
+            function_args = json.loads(tool_call.function.arguments)
+            print(function_args)
+            print(function_args)
+            print(function_args)
+            print(function_args)
+            function_response = function_to_call(
+                promp=function_args.get("promp"),
+            )
+            historial.append(
+                {
+                    "tool_call_id": tool_call.id,
+                    "role": "tool",
+                    "name": function_name,
+                    "content": function_response,
+                }
+            )  # extend conversation with function response
+        second_response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=historial,
+        )  # get a new response from the model where it can see the function response
+
+        response_message=second_response.choices[0].message.content
+
+
+
+
+
+
+    #----------------------------------------------------------------------------------------------------------------
+    #----------------------------------------------------------------------------------------------------------------
+    new_message = Message.objects.create(content=response_message, user = None, chat=chatid)
     new_message.save()
 
-
+   
+   
     return HttpResponse('Message sent successfully')
 
 def getMessages(request, chatid):
     room_details = Chat.objects.get(id_chat=chatid)
     messages = Message.objects.filter(chat=room_details)
     return JsonResponse({"messages":list(messages.values('user__username','content','time').order_by('time'))[::-1]})
+
+
+
+
+
 
 @login_required(login_url='/login')
 def chat_page(request:HttpRequest):
