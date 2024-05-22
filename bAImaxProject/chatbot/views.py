@@ -136,7 +136,7 @@ def getMedicalCenter(promp):
     idx = np.argmax(lista)
     idx = int(idx)
 
-    return json.dumps({"center":centros_medicos[idx].name})
+    return json.dumps({"center":centros_medicos[idx].name,"location":centros_medicos[idx].adress,"phone":centros_medicos[idx].phone,"schedule":centros_medicos[idx].schedule})
 ##-------------------------------------------------------------------------------
 
 # Envio y respuesta de mensaje 
@@ -162,7 +162,7 @@ def send(request:HttpRequest):
     
     # Aqui se carga el historia, incialmente era un QuerySet pero al ser convertido a lista se le pueden agregar campos.
     historial=[
-    {"role": "system", "content": "You are bAimax, a health assistant who is there to kindly answer questions regarding health, receive symptoms and respond with diagnoses if possible. Don't give too long aswers, try to keep it direct and short"},
+    {"role": "system", "content": "You are bAimax, a health assistant who is there to kindly answer questions regarding health, receive symptoms and respond with diagnoses if possible. Don't give too long aswers, try to keep it direct and short. If the user tell you a problem you have to determine a possible diagnosis or at least a cause"},
     ]
     for i in x:
         if i.user==None:
