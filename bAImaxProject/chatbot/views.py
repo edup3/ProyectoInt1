@@ -94,34 +94,34 @@ def chat_page(request:HttpRequest):
     chats = Chat.objects.filter(user = request.user)
     return render(request,'chat_page.html',{'chats':chats})
 
-def emergency(request):
-    _ = load_dotenv('twilio.env')
-    account_sid = os.environ.get('accSid')
-    auth_token = os.environ.get('authToken'),
+def emergency(request:HttpRequest):
+    try:
+        _ = load_dotenv('twilio.env')
+        account_sid = os.environ.get('accSid')
+        auth_token = os.environ.get('authToken')
 
-    client = Client(account_sid, auth_token)
+        client = Client(account_sid, auth_token)
 
-    call = client.calls.create(
-    url="http://demo.twilio.com/docs/voice.xml",
-    # to="+573188763655",
-    to="+573053036284",
-    from_="+12073673832"
-    )
+        call = client.calls.create(
+        url="http://demo.twilio.com/docs/voice.xml",
+        to="+573053036284",
+        from_="+15515537366"
+        )
 
-    return HttpResponse("Calling emergency services")
+        return HttpResponse("Calling emergency services")
+    except:
+        _ = load_dotenv('twilio2.env')
+        account_sid = os.environ.get('accSid2')
+        auth_token = os.environ.get('authToken2')
+        client = Client(account_sid, auth_token)
+
+        message = client.messages.create(
+        from_='+12075604809',
+        body=f"{request.user.username} is calling emergency services",
+        to='+573053036284'
+        )
+        return HttpResponse("Messaging emergency contact")
 
 
-def appointment(request):
-    _ = load_dotenv('twilio2.env')
-    account_sid = os.environ.get('accSid')
-    auth_token = os.environ.get('authToken'),
-
-    client = Client(account_sid, auth_token)
-    message = client.messages.create(
-    from_='+12075604809',
-    body='Hello',
-    to='+573053036284'
-    )
-    return HttpResponse("Appointment scheduled successfully")
 
 
