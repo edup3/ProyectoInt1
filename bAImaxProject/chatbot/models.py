@@ -29,7 +29,9 @@ class Specialist(models.Model):
   phone = models.IntegerField()
   location = models.CharField(max_length=255)
   schedule = models.CharField(max_length=255)
+  embspecialist = models.BinaryField(default=b'\x00')
   id_medicalCenter = models.ForeignKey(MedicalCenter, on_delete=models.CASCADE)
+
 
 class MedicalAppointment(models.Model):
   specialist = models.ForeignKey(Specialist, on_delete=models.CASCADE)
@@ -44,6 +46,7 @@ class Diagnosis(models.Model):
 class Chat(models.Model):
   id_chat = models.IntegerField(primary_key = True)
   user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+  
 class Message(models.Model):
   def __str__(self) -> str:
     if self.user == None:
