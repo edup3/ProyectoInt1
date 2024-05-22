@@ -92,7 +92,7 @@ tools=[
         
         ]
 
-###
+### Aqui se carga la Key de openAI
 
 _ = load_dotenv('openAI.env')
 client = OpenAI(
@@ -117,7 +117,7 @@ def cosine_similarity(a, b):
 
 
 
-###
+### Esta funcion toma un prompt y a partir de este devuelve el nombre del centro medico mas apropiado de acuerdo a la espcialidad
 def getMedicalCenter(promp):
     embpromp=get_embedding(promp)
         
@@ -133,15 +133,9 @@ def getMedicalCenter(promp):
     idx = int(idx)
 
     return json.dumps({"center":centros_medicos[idx].name})
+##-------------------------------------------------------------------------------
 
-
-def getMedicalCenterlol(promp):
-    return json.dumps({"center": "Centro de Especialidad baltimore" + promp })
-###
-
-
-
-
+# Envio y respuesta de mensaje 
 
 def send(request:HttpRequest):
     message = request.POST['message']
@@ -161,7 +155,8 @@ def send(request:HttpRequest):
     messages = Message.objects.filter(chat=room_id) #Filtro de mensajes por room id
     x=list(messages)        #Lista de todos los mensajes de la respectiva room id
     x=x[-msglimit:]         #Lista ajustada al limite de mensajes
-  
+    
+    # Aqui se carga el historia, incialmente era un QuerySet pero al ser convertido a lista se le pueden agregar campos.
     historial=[
     {"role": "system", "content": "You are bAimax, a health assistant who is there to kindly answer questions regarding health, receive symptoms and respond with diagnoses if possible. Don't give too long aswers, try to keep it direct and short"},
     ]
@@ -183,7 +178,7 @@ def send(request:HttpRequest):
     api_key=os.environ.get('openAI_api_key'),
     )
 
-
+    #Aqui se inicializa el mensaje, el cual recibe el historial y crea una respuesta inicial.
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=historial,
@@ -191,18 +186,19 @@ def send(request:HttpRequest):
         tool_choice="auto", )
     #Devuelve el contenido de la respuesta
     z= completion.choices[0].message
-
+    #Aqui se elige la respuesta guardada en la variable Z
     response_message=z
+    z=completion.choices[0].message.content 
     tool_calls = response_message.tool_calls
-
+    # Si existe una llamada a las herramientas, es decir, si se requiere una funcion de tools, se inicia el proceso para ejectural.
     if tool_calls:
         # Step 3: call the function
         # Note: the JSON response may not always be valid; be sure to handle errors
         available_functions = {
             "getMedicalCenter": getMedicalCenter,
-        }  # only one function in this example, but you can have multiple
+        }  # Aqui van las funciones
         historial.append(response_message)  # extend conversation with assistant's reply
-        # Step 4: send the info for each function call and function response to the model
+        # Aqui se envia la informacion a la funcion
         for tool_call in tool_calls:
             function_name = tool_call.function.name
             function_to_call = available_functions[function_name]
@@ -210,10 +206,11 @@ def send(request:HttpRequest):
             print(function_args)
             print(function_args)
             print(function_args)
-            print(function_args)
+            print(function_args)    #Esto era solo para checar los argumentos
             function_response = function_to_call(
                 promp=function_args.get("promp"),
             )
+            # En el historial de mensajes creado por el codigo (No confundir con el historial de la base de datos) se agrega cual fue la respuesta de la funcion.
             historial.append(
                 {
                     "tool_call_id": tool_call.id,
@@ -221,13 +218,20 @@ def send(request:HttpRequest):
                     "name": function_name,
                     "content": function_response,
                 }
-            )  # extend conversation with function response
+            )  # Se repite la conversacion con esta nueva informacion
         second_response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=historial,
-        )  # get a new response from the model where it can see the function response
+        )  
 
+        #Respuesta final
         response_message=second_response.choices[0].message.content
+        z=response_message
+
+    contenidofinal=z
+        
+   
+    
 
 
 
@@ -236,7 +240,7 @@ def send(request:HttpRequest):
 
     #----------------------------------------------------------------------------------------------------------------
     #----------------------------------------------------------------------------------------------------------------
-    new_message = Message.objects.create(content=response_message, user = None, chat=chatid)
+    new_message = Message.objects.create(content=contenidofinal, user = None, chat=chatid)
     new_message.save()
 
    
